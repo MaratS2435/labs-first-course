@@ -252,6 +252,15 @@ void Task(Tree *tr) {
             }
             if(tr->right->value == '/') {
                 tr->value = '*';
+                int flag = 0;
+                Tree *m1;
+                Tree *m2;
+                if(tr->right->right->value == '*') {
+                    m1 = tr->right->right->left;
+                    m2 = tr->right->right->right;
+                    flag = 1;
+                    printf("\n");
+                }
                 buf1 = tr->right->right->value;
                 tr->right->right = NULL;
                 buf2 = tr->right->left->value;
@@ -265,6 +274,10 @@ void Task(Tree *tr) {
                 tr->left->left = new2;
                 tr->left->left->flag = 1;
                 tr->left->right->flag = 2;
+                if(flag == 1) {
+                    tr->right->left = m1;
+                    tr->right->right = m2;
+                }
             }
         }
     }
@@ -299,7 +312,9 @@ int main(void) {
     Tree* tree = PopN(stkn);
     PrintT(tree);
 
-    Task(tree);
+    for(int i = 0; i < 10; i++) {
+        Task(tree);
+    }
     putchar('\n');
     PrintT(tree);
     Print(tree);
